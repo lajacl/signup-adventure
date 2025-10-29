@@ -3,9 +3,22 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:signup_adventure/screens/signup_screen.dart';
 
-class WelcomeScreen extends StatelessWidget {
+class WelcomeScreen extends StatefulWidget {
+  const WelcomeScreen({super.key});
+  @override
+  State<WelcomeScreen> createState() => _WelcomeScreenState();
+}
+
+class _WelcomeScreenState extends State<WelcomeScreen> {
+  final List<String> _avatarList = ['😎', '🤓', '🤪'];
   String _avatar = '';
-  // const WelcomeScreen({super.key});
+
+  void _setAvatar(String avatar) {
+    setState(() {
+      _avatar = avatar;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,26 +70,23 @@ class WelcomeScreen extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               const Text(
-                'Choose your avatar',
+                'Choose your avatar to continue:',
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 16, color: Colors.grey),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  TextButton(
-                    onPressed: () => _avatar = '😎',
-                    child: Text('😎', style: TextStyle(fontSize: 50)),
-                  ),
-                  TextButton(
-                    onPressed: () => _avatar = '🤓',
-                    child: Text('🤓', style: TextStyle(fontSize: 50)),
-                  ),
-                  TextButton(
-                    onPressed: () => _avatar = '🤪',
-                    child: Text('🤪', style: TextStyle(fontSize: 50)),
-                  ),
-                ],
+                children: _avatarList.map((String avatarOption) {
+                  return TextButton(
+                    onPressed: () => _setAvatar(avatarOption),
+                    child: Text(
+                      avatarOption,
+                      style: TextStyle(
+                        fontSize: _avatar == avatarOption ? 100 : 50,
+                      ),
+                    ),
+                  );
+                }).toList(),
               ),
               const SizedBox(height: 20),
               const Text(
@@ -87,14 +97,16 @@ class WelcomeScreen extends StatelessWidget {
               const SizedBox(height: 50),
               // Start Button
               ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => SignupScreen(),
-                    ),
-                  );
-                },
+                onPressed: _avatar.isEmpty
+                    ? null
+                    : () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SignupScreen(),
+                          ),
+                        );
+                      },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.deepPurple,
                   padding: const EdgeInsets.symmetric(
