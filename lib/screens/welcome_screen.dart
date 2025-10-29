@@ -75,14 +75,17 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 style: TextStyle(fontSize: 16, color: Colors.grey),
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: _avatarList.map((String avatarOption) {
                   return TextButton(
                     onPressed: () => _setAvatar(avatarOption),
                     child: Text(
                       avatarOption,
                       style: TextStyle(
-                        fontSize: _avatar == avatarOption ? 100 : 50,
+                        fontSize: 40,
+                        backgroundColor: _avatar == avatarOption
+                            ? Colors.deepPurple
+                            : null,
                       ),
                     ),
                   );
