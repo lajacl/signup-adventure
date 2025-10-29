@@ -103,7 +103,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => SignupScreen(),
+                            builder: (context) => SignupScreen(avatar: _avatar),
                           ),
                         );
                       },

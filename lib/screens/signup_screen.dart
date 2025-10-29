@@ -1,10 +1,11 @@
-
 // Signup Screen w/ Interactive Form
 import 'package:flutter/material.dart';
 import 'package:signup_adventure/screens/success_screen.dart';
 
 class SignupScreen extends StatefulWidget {
-  const SignupScreen({super.key});
+  final String avatar;
+
+  const SignupScreen({super.key, required this.avatar});
   @override
   State<SignupScreen> createState() => _SignupScreenState();
 }
@@ -55,7 +56,10 @@ class _SignupScreenState extends State<SignupScreen> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => SuccessScreen(userName: _nameController.text),
+            builder: (context) => SuccessScreen(
+              userName: _nameController.text,
+              avatar: widget.avatar,
+            ),
           ),
         );
       });
@@ -202,6 +206,29 @@ class _SignupScreenState extends State<SignupScreen> {
                     }
                     return null;
                   },
+                  onChanged: (value) {
+                    setState(() {});
+                  },
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  spacing: 20,
+                  children: [
+                    Text('Password Strength'),
+                    Expanded(
+                      child: LinearProgressIndicator(
+                        value: _passwordController.text.length / 6,
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          _passwordController.text.length >= 6
+                              ? Colors.green
+                              : _passwordController.text.length >= 3
+                              ? Colors.yellow
+                              : Colors.red,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 30),
                 // Submit Button w/ Loading Animation
