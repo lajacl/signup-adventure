@@ -14,7 +14,7 @@ class SignupAdventureApp extends StatelessWidget {
     return MaterialApp(
       title: 'Signup Adventure ',
       theme: ThemeData(primarySwatch: Colors.deepPurple, fontFamily: 'Roboto'),
-      home: const WelcomeScreen(),
+      home: WelcomeScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
