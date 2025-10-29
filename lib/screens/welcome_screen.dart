@@ -109,6 +109,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.deepPurple,
+                  disabledBackgroundColor: Colors.grey,
                   padding: const EdgeInsets.symmetric(
                     horizontal: 40,
                     vertical: 16,
