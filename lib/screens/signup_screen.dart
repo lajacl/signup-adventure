@@ -22,6 +22,9 @@ class _SignupScreenState extends State<SignupScreen> {
     'Strong Password Master': Icons.lock,
     'Profile Completer': Icons.badge,
   };
+  double _progressValue = 0;
+  String _progressMessage = '';
+  Color _progressColor = Colors.red;
 
   @override
   void dispose() {
@@ -30,6 +33,43 @@ class _SignupScreenState extends State<SignupScreen> {
     _passwordController.dispose();
     _dobController.dispose();
     super.dispose();
+  }
+
+  void _updateFilledFieldCount() {
+    setState(() {
+      double progress = 0;
+
+      if (_nameController.text.isNotEmpty) {
+        progress += .25;
+      }
+
+      if (_emailController.text.isNotEmpty) {
+        progress += .25;
+      }
+      if (_dobController.text.isNotEmpty) {
+        progress += .25;
+      }
+      if (_passwordController.text.isNotEmpty) {
+        progress += .25;
+      }
+
+      // Set progress message and color
+      if (progress == .25) {
+        _progressMessage = 'Great start!';
+        _progressColor = Colors.deepOrange;
+      } else if (progress == .50) {
+        _progressMessage = 'Halfway there!';
+        _progressColor = Colors.orange;
+      } else if (progress == .75) {
+        _progressMessage = 'Almost done!';
+        _progressColor = Colors.yellow;
+      } else if (progress == 1) {
+        _progressMessage = 'Ready for adventure!';
+        _progressColor = Colors.green;
+      }
+
+      _progressValue = progress;
+    });
   }
 
   // Date Picker Function
@@ -89,6 +129,7 @@ class _SignupScreenState extends State<SignupScreen> {
         child: SingleChildScrollView(
           child: Form(
             key: _formKey,
+            onChanged: _updateFilledFieldCount,
             child: Column(
               children: [
                 // Animated Form Header
@@ -118,6 +159,16 @@ class _SignupScreenState extends State<SignupScreen> {
                       ),
                     ],
                   ),
+                ),
+                const SizedBox(height: 20),
+                if (_progressMessage.isNotEmpty) Text(_progressMessage),
+                const SizedBox(height: 20),
+                LinearProgressIndicator(
+                  value: _progressValue,
+                  valueColor: AlwaysStoppedAnimation<Color>(_progressColor),
+                  color: Colors.grey,
+                  minHeight: 20,
+                  borderRadius: BorderRadius.circular(10),
                 ),
                 const SizedBox(height: 30),
                 // Name Field
