@@ -104,6 +104,9 @@ class _SuccessScreenState extends State<SuccessScreen> {
                     ],
                     totalRepeatCount: 1,
                   ),
+                  SizedBox(height: 20),
+                  Text(widget.avatar, style: TextStyle(fontSize: 50)),
+                  SizedBox(height: 20),
                   const Text(
                     'You have been awarded badges!',
                     style: TextStyle(fontSize: 18, color: Colors.grey),
@@ -114,7 +117,14 @@ class _SuccessScreenState extends State<SuccessScreen> {
                       ...widget.badges.entries.map((badge) {
                         return Row(
                           spacing: 20,
-                          children: [Icon(badge.value, color: Colors.deepPurple, size: 50,), Text(badge.key)],
+                          children: [
+                            Icon(
+                              badge.value,
+                              color: Colors.deepPurple,
+                              size: 50,
+                            ),
+                            Text(badge.key),
+                          ],
                         );
                       }),
                     ],
