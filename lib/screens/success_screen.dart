@@ -1,12 +1,19 @@
-
 // Tha Big Confetti Celebration
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 
 class SuccessScreen extends StatefulWidget {
+  final String avatar;
+  final Map<String, IconData> badges;
+
   final String userName;
-  const SuccessScreen({super.key, required this.userName});
+  const SuccessScreen({
+    super.key,
+    required this.userName,
+    required this.avatar,
+    required this.badges,
+  });
   @override
   State<SuccessScreen> createState() => _SuccessScreenState();
 }
@@ -96,6 +103,21 @@ class _SuccessScreenState extends State<SuccessScreen> {
                       ),
                     ],
                     totalRepeatCount: 1,
+                  ),
+                  const Text(
+                    'You have been awarded badges!',
+                    style: TextStyle(fontSize: 18, color: Colors.grey),
+                  ),
+                  Column(
+                    spacing: 10,
+                    children: [
+                      ...widget.badges.entries.map((badge) {
+                        return Row(
+                          spacing: 20,
+                          children: [Icon(badge.value, color: Colors.deepPurple, size: 50,), Text(badge.key)],
+                        );
+                      }),
+                    ],
                   ),
                   const SizedBox(height: 20),
                   const Text(

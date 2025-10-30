@@ -18,6 +18,11 @@ class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController _dobController = TextEditingController();
   bool _isPasswordVisible = false;
   bool _isLoading = false;
+  Map<String, IconData> badges = {
+    'Strong Password Master': Icons.lock,
+    'Profile Completer': Icons.badge,
+  };
+
   @override
   void dispose() {
     _nameController.dispose();
@@ -47,6 +52,10 @@ class _SignupScreenState extends State<SignupScreen> {
       setState(() {
         _isLoading = true;
       });
+      // Assign Badges
+      if (DateTime.now().hour < 12) {
+        badges['The Early Bird Special'] = Icons.timer;
+      }
       // Simulate API call
       Future.delayed(const Duration(seconds: 2), () {
         if (!mounted) return; // Check if the widget is still in the tree
@@ -59,6 +68,7 @@ class _SignupScreenState extends State<SignupScreen> {
             builder: (context) => SuccessScreen(
               userName: _nameController.text,
               avatar: widget.avatar,
+              badges: badges,
             ),
           ),
         );
