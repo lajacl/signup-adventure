@@ -1,4 +1,5 @@
 // Signup Screen w/ Interactive Form
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:signup_adventure/screens/success_screen.dart';
 
@@ -16,6 +17,7 @@ class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _dobController = TextEditingController();
+  final AudioPlayer _audioPlayer = AudioPlayer();
   bool _isPasswordVisible = false;
   bool _isLoading = false;
   Map<String, IconData> badges = {
@@ -32,6 +34,7 @@ class _SignupScreenState extends State<SignupScreen> {
     _emailController.dispose();
     _passwordController.dispose();
     _dobController.dispose();
+    _audioPlayer.dispose();
     super.dispose();
   }
 
@@ -68,8 +71,15 @@ class _SignupScreenState extends State<SignupScreen> {
         _progressColor = Colors.green;
       }
 
+      if (progress > _progressValue) {
+        _playSound('sounds/correct.mp3');
+      }
       _progressValue = progress;
     });
+  }
+
+  Future<void> _playSound(String path) async {
+    await _audioPlayer.play(AssetSource(path));
   }
 
   // Date Picker Function
